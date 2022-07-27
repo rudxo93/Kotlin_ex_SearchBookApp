@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">BookSearchApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 프래그먼트 이름 정의 -->
+    <string name="search">Search Books</string>
+    <string name="favorite">Favorite Books</string>
+    <string name="setting">Settings</string>
+    <!-- 프래그먼트 이름 정의 -->
+
 </resources>
