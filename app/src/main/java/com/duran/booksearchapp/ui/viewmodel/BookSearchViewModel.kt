@@ -1,9 +1,6 @@
 package com.duran.booksearchapp.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.duran.booksearchapp.data.model.SearchResponse
 import com.duran.booksearchapp.data.repository.BookSearchRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +10,8 @@ import kotlinx.coroutines.launch
 class BookSearchViewModel(
     // BookSearchViewModel은 초기값으로 bookSearchRepository를 전달받아야 하는데 viewModel은 그자체로는
     // 생성시에 초기값을 전달받을수 없기 떄문에 팩토리를 만들어 주어야한다.
-    private val bookSearchRepository: BookSearchRepository
+    private val bookSearchRepository: BookSearchRepository,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     // Api
@@ -35,5 +33,25 @@ class BookSearchViewModel(
                 _searchResult.postValue(body)
             }
         }
+    }
+
+    // SavedState
+    // 쿼리보존에 사용할 쿼리변수 정의
+    var query = String()
+        // backingfield를 사용해서 쿼리의 값이 변화하면 그 값을 바로 반영
+        set(value) {
+            field = value
+            // saveState에 저장한다.
+            savedStateHandle.set(SAVE_STATE_KEY, value)
+        }
+
+    // viewModel을 초기화할때 쿼리 초기값을 savestate에서 가져오도록 하고 만약 값이 없을경우 공백값 반환
+    init {
+        query = savedStateHandle.get<String>(SAVE_STATE_KEY) ?: ""
+    }
+
+    // 저장 및 로드에 사용할 SAVE_STATE_KEY를 정의
+    companion object {
+        private const val SAVE_STATE_KEY = "query"
     }
 }

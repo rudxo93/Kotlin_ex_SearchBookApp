@@ -65,6 +65,10 @@ class SearchFragment : Fragment() {
         var startTime = System.currentTimeMillis()
         var endTime: Long
 
+        // 쿼리를 저장하고 불러오는 코드 추가
+        binding.etSearch.text =
+            Editable.Factory.getInstance().newEditable(bookSearchViewModel.query)
+
         // editText는 addTextChangedListener를 붙혀서 text가 입력이 되면 그 값을 viewModel로 전달한 다음
         // viewModel의 searchBooks가 실행되도록 한다.
         // 이때 값이 입력되자마자 실행하지 않고 사람의 입력시간을 고려해서 검색실행까지 딜레이를 주도록한다.
@@ -77,6 +81,7 @@ class SearchFragment : Fragment() {
                     val query = it.toString().trim()
                     if (query.isNotEmpty()) {
                         bookSearchViewModel.searchBooks(query)
+                        bookSearchViewModel.query = query
                     }
                 }
             }
