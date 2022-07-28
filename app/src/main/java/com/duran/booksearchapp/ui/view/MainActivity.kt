@@ -2,15 +2,20 @@ package com.duran.booksearchapp.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.duran.booksearchapp.R
+import com.duran.booksearchapp.data.repository.BookSearchRepositoryImpl
 import com.duran.booksearchapp.databinding.ActivityMainBinding
-import com.duran.booksearchapp.ui.view.SettingFragment
+import com.duran.booksearchapp.ui.viewmodel.BookSearchViewModel
+import com.duran.booksearchapp.ui.viewmodel.BookSearchViewModelProviderFactory
 
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
+    lateinit var bookSearchViewModel: BookSearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +28,11 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) { // savedInstanceState -> 앱이 처음 실행되었는지 여부를 판단
             binding.bottomNavigationView.selectedItemId = R.id.fragment_search
         }
+
+        // viewModel 초기화
+        val bookSearchRepository = BookSearchRepositoryImpl()
+        val factory = BookSearchViewModelProviderFactory(bookSearchRepository)
+        bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
     }
 
     private fun setupBottomNavigationView() {
