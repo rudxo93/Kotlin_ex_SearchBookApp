@@ -18,6 +18,9 @@ class BookSearchViewModel(
 
     // Api
     private val _searchResult = MutableLiveData<SearchResponse>()
+
+    // edittext값이 변할때마다 bookSearchViewModel 내부의 searchResult값이 갱신이 된다.
+    // searchResult값을 searchFragment에서 감시하면 된다.
     val searchResult: LiveData<SearchResponse> get() = _searchResult
 
     // repository의 searchBooks를 코루틴 내부에서 수행하는 searchBooks함수

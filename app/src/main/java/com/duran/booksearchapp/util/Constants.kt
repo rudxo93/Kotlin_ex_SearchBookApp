@@ -10,4 +10,6 @@ object Constants {
     // android gradle plugin 7.0.2버전 이상을 사용하는 프로젝트에서는 Secrets Gradle Plugin for Android라는
     // 플러그인을 사용해서 안전하게 키를 주입할 수 있다.
     // https://developers.google.com/maps/documentation/android-sdk/secrets-gradle-plugin 참고
+
+    const val SEARCH_BOOKS_TIME_DELAY = 100L
 }
